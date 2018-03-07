@@ -8,33 +8,31 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "Project")
-public class Project {
+@Table(name = "TestSuite")
+public class TestSuite {
 
     @Id
     @Column(name = "UID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
 
-    @Column(name = "ProjectName")
-    private String projectName;
+    @Column(name = "TestSuiteName")
+    private String testSuiteName;
 
-    @Column(name = "Description")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "testSuite")
+    private List<TestCase> testCaseList;
 
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    private List<TestSuite> testSuiteList;
-
-    
 
 
 
 
 }
-
-
